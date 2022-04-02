@@ -9,17 +9,18 @@ pipeline {
         }
         stage('run') { 
             steps{script{
-                withEnv(['BUILD_ID=dontkill']) {
+                withEnv(['JENKINS_NODE_COOKIE=dontkill']) {
                      sh "ng serve &"
                 }
             }
+               
                 }
         }
-        steps {script{
-                withEnv(['BUILD_ID=dontkill']) {
-                     sh "ng serve &"
-                }
-            }}
+        stage('Test') {
+            steps {sh "curl http://localhost:4200"
+                echo 'Testing..'
+            }
         }
-
+       
         }
+    }
