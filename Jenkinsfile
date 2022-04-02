@@ -8,18 +8,18 @@ pipeline {
             }
         }
         stage('run') { 
-            steps{sh "ng serve &> /dev/null &"
-                echo 'run..'
-                }
-        }
-        stage('Test') {
-            steps {script{
+            steps{script{
                 withEnv(['BUILD_ID=dontkill']) {
                      sh "ng serve &"
                 }
             }
-            }
+                }
         }
-       
+        steps {script{
+                withEnv(['BUILD_ID=dontkill']) {
+                     sh "ng serve &"
+                }
+            }}
         }
-    }
+
+        }
